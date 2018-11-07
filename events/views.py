@@ -3,11 +3,8 @@ from django.http import HttpResponse
 
 
 def index(request):
-    html = '''
-    Hey, app running.
-    Check <a href="/events">offer</a>
-    '''
-    return HttpResponse(html)
+
+    return HttpResponse(request, 'events/index.html')
 
 
 def event_listing(request):
