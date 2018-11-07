@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from .models import Event
+
 
 def index(request):
 
@@ -8,14 +10,10 @@ def index(request):
 
 
 def event_listing(request):
-    html = '''
-    <ul>
-        <li>Chill on the beach <a href="chill">chill</a></li>
-        <li>Camping in the woods <a href="camp">camp</a></li>
-        <li>Flying into space <a href="fly">fly</a></li>
-    </ul>
-    '''
-    return HttpResponse(html)
+
+    events = Event.objects.all()
+
+    return render(request, 'events/event_listing.html', {'events': events})
 
 
 def event_detail(request, name):
