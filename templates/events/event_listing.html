@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Event listing</title>
+    <title>Event Listing</title>
 </head>
 <body>
     <ul>
-        {% for eventt in events %}
-        <li>NAME:{{ event.name }} LOCATION:{{ event.location }} DESCRIPTION:{{ event.description }}
-        {% endfor %}
-        </li>
-    </ul>>
+    {% for event in events %}
+    <li>NAME: {{ event.name }} LOCATION: {{ event.location}} DESCRIPTION: {{ event.description }}
+    {% endfor %}
+    </ul>
 
 </body>
 </html>
