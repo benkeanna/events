@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Event(models.Model):
     """
     Basic event model.
@@ -12,8 +11,6 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-
-
 class EventRun(models.Model):
     """
     Basic model for one event run.

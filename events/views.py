@@ -21,29 +21,12 @@ def event_listing(request):
     return render(request, 'events/event_listing.html', {'events': events})
 
 
-def eventrun_listing(request):
-    """
-    page with all event runs.
-    """
-    eventruns = EventRun.objects.all()
-
-    return render(request, 'events/eventrun_listing.html',
-                  {'eventruns': eventruns})
-
-
-def event_detail(request, name):
+def event_detail(request, pk):
     """
     Page with event detail.
     """
-    data = {
-        'chill': '<h2>Chill on the beach just for 500 dolars.</h2>',
-        'camp':  '<h2>Camp in the woods for 1000 dolars.</h2>',
-        'fly': '<h2>Fly high for free.</h2>'
-    }
+    event = Event.objects.get(pk=pk)
+    runs = event.eventrun_set.all().order_by('happens')
+    args = {'event': event, 'runs': runs}
 
-    select = data.get(name)
-
-    if select:
-        return HttpResponse(select)
-    else:
-        return HttpResponse('No such thing')
+    return render(request, 'events/event_detail.html', args)
