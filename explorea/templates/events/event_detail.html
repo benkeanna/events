@@ -21,11 +21,11 @@
 
 <table>
     <th>DATE</th><th>SEATS</th><th>PRICE</th>
-{% for run in runs %}
- <tr>
-      <th>{{ run.happens }}</th><th>{{ run.seats_available }}</th><th>{{ run.price }}</th>
- </tr>
-{% endfor %}
+    {% for run in runs %}
+     <tr>
+          <th>{{ run.happens }}</th><th>{{ run.seats_available }}</th><th>{{ run.price }}</th>
+     </tr>
+    {% endfor %}
 </table>
 <br>
 <a href="/events/">Back</a>
