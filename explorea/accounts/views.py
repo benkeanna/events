@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
 
 from .forms import RegisterForm
 
@@ -35,6 +35,9 @@ def register(request):
             )
             user.set_password(password)
             user.save()
+
+            auth_user = authenticate(username=username, password=password)
+            login(request, auth_user)
 
             return redirect('profile')
 
