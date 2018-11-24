@@ -1,14 +1,13 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 
-from .models import Event, EventRun
+from .models import Event
+from .forms import CreateEventForm
 
 
 def index(request):
     """
     Basic view of main page.
     """
-
     return render(request, 'events/index.html')
 
 
@@ -30,3 +29,30 @@ def event_detail(request, pk):
     args = {'event': event, 'runs': runs}
 
     return render(request, 'events/event_detail.html', args)
+
+
+def my_events(request):
+    """
+    Page with all users events.
+    """
+    events = Event.objects.all().filter(host_id=request.user.id)
+
+    return render(request, 'events/my_events.html', {'events': events})
+
+
+def create_event(request):
+    """
+    Form for event creation.
+    """
+    if request.method == 'POST':
+        form = CreateEventForm(request.POST)
+
+        if form.is_valid():
+            host_id = form.cleaned_data.get('host_id')
+
+            form.save()
+
+            return redirect('my_events')
+
+    form = CreateEventForm
+    return render(request, 'events/create_event.html', {'form': form})

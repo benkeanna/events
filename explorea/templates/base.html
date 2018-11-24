@@ -8,6 +8,9 @@
 </head>
 <body>
     <h1>EVENTS</h1>
+    {% block content %}
+
+    {% endblock content %}
 
     <div>
         {% if user.is_authenticated %}
@@ -16,9 +19,6 @@
         <a href="/accounts/login/">LOG IN</a>
         {% endif %}
     </div>
-
-    {% block content %}
-
-    {% endblock content %}
+<a href="/">Main page</a>
 </body>
 </html>

@@ -1,9 +1,13 @@
 from django.db import models
+from django.conf.global_settings import AUTH_USER_MODEL
+
 
 class Event(models.Model):
     """
     Basic event model.
     """
+    host = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=1000)
     location = models.CharField(max_length=500)
@@ -11,6 +15,8 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+
+
 class EventRun(models.Model):
     """
     Basic model for one event run.
