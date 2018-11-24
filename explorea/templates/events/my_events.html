@@ -8,6 +8,7 @@
 
     {% if user.is_authenticated %}
     <h1>My events</h1>
+    <a href="/events/create/">Create new event</a>
         <table>
             <tr>
             <th>NAME</th><th>LOCATION</th>
@@ -15,6 +16,8 @@
         {% for event in events %}
             <tr>
             <td><a href="/events/detail/{{ event.id }}">{{ event.name }}</a></td><td> {{ event.location}}</td>
+            <td><a href="/events/update/{{ event.id }}">UPDATE</a></td>
+            <td><a href="/events/delete/{{ event.id }}">DELETE</a></td>
             </tr>
         {% endfor %}
     </table>

@@ -3,10 +3,8 @@ from django.forms import ModelForm
 from .models import Event
 
 
-class CreateEventForm(ModelForm):
-    """
-    Event creation form.
-    """
+class EventForm(ModelForm):
+
     class Meta:
         model = Event
         fields = [
