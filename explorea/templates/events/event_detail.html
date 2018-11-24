@@ -18,11 +18,16 @@
 
 <hr>
 
+<br>
+<a href="/events/{{ event.id }}/create_run/">Create new event run</a>
+
 <table>
     <th>DATE</th><th>SEATS</th><th>PRICE</th>
     {% for run in runs %}
      <tr>
           <th>{{ run.happens }}</th><th>{{ run.seats_available }}</th><th>{{ run.price }}</th>
+		  <td><a href="/events/update_run/{{ run.id }}/">UPDATE</a></td>
+          <td><a href="/events/delete_run/{{ run.id }}/">DELETE</a></td>
      </tr>
     {% endfor %}
 </table>
