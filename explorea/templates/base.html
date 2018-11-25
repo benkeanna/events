@@ -8,17 +8,24 @@
 </head>
 <body>
     <h1>EVENTS</h1>
+    <header>
+        {% if user.is_authenticated %}
+
+        <a href="/accounts/profile/">PROFILE</a>
+        <a href="/accounts/logout/">LOG OUT</a>
+        <p>{{ user.username }}</p>
+
+        {% else %}
+
+        <a href="/accounts/login/">LOG IN</a>
+        <a href="/accounts/register/">REGISTER</a>
+
+        {% endif %}
+        <a href="/events/">Events</a>
+    </header>
     {% block content %}
 
     {% endblock content %}
 
-    <div>
-        {% if user.is_authenticated %}
-        <a href="/accounts/logout/">LOG OUT</a>
-        {% else %}
-        <a href="/accounts/login/">LOG IN</a>
-        {% endif %}
-    </div>
-<a href="/">Main page</a>
 </body>
 </html>
