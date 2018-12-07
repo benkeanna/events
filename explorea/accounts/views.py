@@ -1,46 +1,60 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 
 from .forms import RegisterForm, EditProfileForm
 
 
 def profile(request):
-    """
-    Page with user information.
-    """
+	"""
+	Page with user information.
+	"""
 
-    return render(request, 'accounts/profile.html')
+	return render(request, 'accounts/profile.html')
 
 
 def register(request):
-    """
-    Registration page.
-    """
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
+	"""
+	Registration page.
+	"""
+	if request.method == 'POST':
+		form = RegisterForm(request.POST)
 
-        if form.is_valid():
-            user = form.save()
-            password = form.cleaned_data.get('password1')
+		if form.is_valid():
+			user = form.save()
+			password = form.cleaned_data.get('password1')
 
-            auth_user = authenticate(username=user.username, password=password)
-            login(request, auth_user)
+			auth_user = authenticate(username=user.username, password=password)
+			login(request, auth_user)
 
-            return redirect('profile')
+			return redirect('profile')
 
-    return render(request, 'accounts/register.html', {'form': RegisterForm()})
+	return render(request, 'accounts/register.html', {'form': RegisterForm()})
 
 
 def edit_profile(request):
-    """
-    Edit profile page.
-    """
-    if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
+	"""
+	Edit profile page.
+	"""
+	if request.method == 'POST':
+		form = EditProfileForm(request.POST, instance=request.user)
 
-        if form.is_valid():
-            form.save()
-            return redirect('profile')
+		if form.is_valid():
+			form.save()
+			return redirect('profile')
 
-    form = EditProfileForm(instance=request.user)
-    return render(request, 'accounts/edit_profile.html', {'form': form})
+	args ={'form': EditProfileForm(instance=request.user)}
+	return render(request, 'accounts/edit_profile.html', args)
+
+
+def change_password(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(request.POST, user=request.user)
+
+		if form.is_valid():
+			user = form.save()
+			update_session_auth_hash(request, user)
+			return redirect('accounts/profile')
+
+	args = {'form': PasswordChangeForm(user=request.user)}
+	return render(request, 'accounts/change_password.html', args)
