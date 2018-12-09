@@ -49,12 +49,12 @@ def edit_profile(request):
 
 def change_password(request):
 	if request.method == 'POST':
-		form = PasswordChangeForm(request.POST, user=request.user)
+		form = PasswordChangeForm(data=request.POST, user=request.user)
 
 		if form.is_valid():
 			user = form.save()
 			update_session_auth_hash(request, user)
-			return redirect('accounts/profile')
+			return redirect('/accounts/profile/')
 
-	args = {'form': PasswordChangeForm(user=request.user)}
-	return render(request, 'accounts/change_password.html', args)
+	form = PasswordChangeForm(user=request.user)
+	return render(request, 'accounts/change_password.html', {'form': form})
