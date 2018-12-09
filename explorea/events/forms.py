@@ -1,9 +1,9 @@
-from django.forms import ModelForm
+from django import forms
 
 from .models import Event, EventRun
 
 
-class EventForm(ModelForm):
+class EventForm(forms.ModelForm):
 
 	class Meta:
 		model = Event
@@ -15,13 +15,10 @@ class EventForm(ModelForm):
 		]
 
 
-class EventRunForm(ModelForm):
+class EventRunForm(forms.ModelForm):
+	date = forms.DateField(input_formats=["%d.%m.%Y"],
+	                       wigdet=forms.DateInput(format = '%d.%m.%Y'))
 	
 	class Meta:
 		model = EventRun
-		fields = [
-			'date',
-			'time',
-			'seats_available',
-			'price',
-		]
+		exclude = ['event']
