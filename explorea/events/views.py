@@ -5,16 +5,25 @@ from .forms import EventForm, EventRunForm
 
 
 def index(request):
+	"""
+	Home page.
+	"""
 	return render(request, 'events/index.html')
 
 
 def event_listing(request):
+	"""
+	Page with all events.
+	"""
 	events = Event.objects.all()
 
 	return render(request, 'events/event_listing.html', {'events': events})
 
 
 def event_detail(request, pk):
+	"""
+	Page with event detail.
+	"""
 	event = Event.objects.get(pk=pk)
 	runs = event.eventrun_set.all().order_by('date')
 	args = {'event': event, 'runs': runs}
@@ -23,12 +32,18 @@ def event_detail(request, pk):
 
 
 def my_events(request):
+	"""
+	Page with events created by user.
+	"""
 	events = Event.objects.all().filter(host_id=request.user.id)
 
 	return render(request, 'events/my_events.html', {'events': events})
 
 
 def create_event(request):
+	"""
+	Event creation page.
+	"""
 	if request.method == 'POST':
 		form = EventForm(request.POST)
 
@@ -44,6 +59,9 @@ def create_event(request):
 
 
 def update_event(request, pk):
+	"""
+	Event updating page.
+	"""
 	event = Event.objects.get(pk=pk)
 	
 	if request.method == 'POST':
@@ -61,12 +79,18 @@ def update_event(request, pk):
 
 
 def delete_event(request, pk):
+	"""
+	Deletes event..
+	"""
 	Event.objects.get(pk=pk).delete()
 
 	return redirect('my_events')
 
 
 def create_event_run(request, event_id):
+	"""
+	Event run creation page.
+	"""
 	if request.method == 'POST':
 		form = EventRunForm(request.POST)
 		
@@ -82,7 +106,9 @@ def create_event_run(request, event_id):
 
 
 def update_event_run(request, event_run_id):
-	
+	"""
+	Event run updating page.
+	"""
 	event_run = EventRun.objects.get(pk=event_run_id)
 	
 	if request.method == 'POST':
@@ -99,7 +125,9 @@ def update_event_run(request, event_run_id):
 
 
 def delete_event_run(request, event_run_id):
-	
+	"""
+	Deletes event run.
+	"""
 	run = EventRun.objects.get(pk=event_run_id)
 	event_id = run.event.id
 	run.delete()
