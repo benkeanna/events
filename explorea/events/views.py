@@ -16,7 +16,7 @@ def event_listing(request):
 
 def event_detail(request, pk):
 	event = Event.objects.get(pk=pk)
-	runs = event.eventrun_set.all().order_by('happens')
+	runs = event.eventrun_set.all().order_by('date')
 	args = {'event': event, 'runs': runs}
 
 	return render(request, 'events/event_detail.html', args)
