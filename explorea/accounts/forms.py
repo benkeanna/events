@@ -1,13 +1,21 @@
+from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, UserModel
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+from core.validators import validate_human_name
+
+UserModel = get_user_model()
 
 
 class RegisterForm(UserCreationForm):
     """
     Registration form derived from UserCreationForm.
     """
+    first_name = forms.CharField(max_length=100, validators=[validate_human_name,])
+    last_name = forms.CharField(max_length=100, validators=[validate_human_name,])
+
     class Meta:
-        model = get_user_model()
+        model = UserModel
         fields = [
             'username',
             'email',
@@ -20,8 +28,11 @@ class RegisterForm(UserCreationForm):
 
 class EditProfileForm(UserChangeForm):
     """
-    Change form derived from UserChangeForm.
+    Edit profile form derived from UserChangeForm.
     """
+    first_name = forms.CharField(max_length=100, validators=[validate_human_name,])
+    last_name = forms.CharField(max_length=100, validators=[validate_human_name,])
+
     class Meta:
         model = UserModel
         fields = [
