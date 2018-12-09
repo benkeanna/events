@@ -27,6 +27,8 @@ def register(request):
 			login(request, auth_user)
 
 			return redirect('profile')
+		else:
+			return render(request, 'accounts/register.html', {'form': form})
 
 	return render(request, 'accounts/register.html', {'form': RegisterForm()})
 
@@ -42,7 +44,7 @@ def edit_profile(request):
 			form.save()
 			return redirect('profile')
 
-	args ={'form': EditProfileForm(instance=request.user)}
+	args = {'form': EditProfileForm(instance=request.user)}
 	return render(request, 'accounts/edit_profile.html', args)
 
 
