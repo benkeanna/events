@@ -9,7 +9,6 @@ def profile(request):
 	"""
 	Page with user information.
 	"""
-
 	return render(request, 'accounts/profile.html')
 
 
@@ -48,6 +47,9 @@ def edit_profile(request):
 
 
 def change_password(request):
+	"""
+	Page for changing password.
+	"""
 	if request.method == 'POST':
 		form = PasswordChangeForm(data=request.POST, user=request.user)
 
@@ -55,6 +57,9 @@ def change_password(request):
 			user = form.save()
 			update_session_auth_hash(request, user)
 			return redirect('/accounts/profile/')
+		else:
+			return render(request, 'accounts/change_password.html',
+			              {'form': form})
 
 	form = PasswordChangeForm(user=request.user)
 	return render(request, 'accounts/change_password.html', {'form': form})
