@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 
 from .forms import RegisterForm, EditProfileForm
 
 
+@login_required
 def profile(request):
 	"""
 	Page with user information.
@@ -33,6 +35,7 @@ def register(request):
 	return render(request, 'accounts/register.html', {'form': RegisterForm()})
 
 
+@login_required
 def edit_profile(request):
 	"""
 	Edit profile page.
@@ -48,6 +51,7 @@ def edit_profile(request):
 	return render(request, 'accounts/edit_profile.html', args)
 
 
+@login_required
 def change_password(request):
 	"""
 	Page for changing password.

@@ -124,3 +124,6 @@ STATIC_URL = '/static/'
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
+
+
+LOGIN_URL = '/accounts/login/'

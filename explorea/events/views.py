@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 from .models import Event, EventRun
 from .forms import EventForm, EventRunForm
@@ -30,7 +31,7 @@ def event_detail(request, pk):
 
 	return render(request, 'events/event_detail.html', args)
 
-
+@login_required
 def my_events(request):
 	"""
 	Page with events created by user.
@@ -40,6 +41,7 @@ def my_events(request):
 	return render(request, 'events/my_events.html', {'events': events})
 
 
+@login_required
 def create_event(request):
 	"""
 	Event creation page.
@@ -58,6 +60,7 @@ def create_event(request):
 	return render(request, 'events/create_event.html', args)
 
 
+@login_required
 def update_event(request, pk):
 	"""
 	Event updating page.
@@ -78,6 +81,7 @@ def update_event(request, pk):
 	return render(request, 'events/update_event.html', args)
 
 
+@login_required
 def delete_event(request, pk):
 	"""
 	Deletes event..
@@ -87,6 +91,7 @@ def delete_event(request, pk):
 	return redirect('my_events')
 
 
+@login_required
 def create_event_run(request, event_id):
 	"""
 	Event run creation page.
@@ -105,6 +110,7 @@ def create_event_run(request, event_id):
 	return render(request, 'events/create_event_run.html', args)
 
 
+@login_required
 def update_event_run(request, event_run_id):
 	"""
 	Event run updating page.
@@ -124,6 +130,7 @@ def update_event_run(request, event_run_id):
 	return render(request, 'events/update_event_run.html', args)
 
 
+@login_required
 def delete_event_run(request, event_run_id):
 	"""
 	Deletes event run.
