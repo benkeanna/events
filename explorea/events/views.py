@@ -31,6 +31,7 @@ def event_detail(request, pk):
 
 	return render(request, 'events/event_detail.html', args)
 
+
 @login_required
 def my_events(request):
 	"""
