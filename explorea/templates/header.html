@@ -1,0 +1,41 @@
+<header>
+
+    <div class="header-section">
+        <a class="nav-button" href="/">
+            Explorea
+        </a>
+    </div>
+
+    <div class="header-section">
+        <a class="nav-button" href="/events/">
+            Events
+        </a>
+        <a class="nav-button" href="/events/mine/">
+            My Events
+        </a>
+        <a class="nav-button" href="#">
+            Hosts
+        </a>
+    </div>
+
+    <div class="header-section">
+        {% if user.is_authenticated %}
+
+            <a class="nav-button" title="Profile" href="/accounts/profile/">
+                {{ user.username }}
+            </a>
+            <a class="nav-button" href="/accounts/logout/">
+                logout
+            </a>
+
+        {% else %}
+            <a class="nav-button" href="/accounts/login/">
+                log in
+            </a>
+            <a class="nav-button" href="/accounts/register/">
+                sign up
+            </a>
+        {% endif %}
+    </div>
+
+</header>

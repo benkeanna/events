@@ -19,7 +19,9 @@
 <hr>
 
 <br>
-<a href="/events/{{ event.id }}/create_run/">Create new event run</a>
+    {% if user.is_authenticated %}
+        <a href="/events/{{ event.id }}/create_run/">Create new event run</a>
+    {% endif %}
 
 <table>
     <th>DATE</th><th>SEATS</th><th>PRICE</th>
