@@ -121,6 +121,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
