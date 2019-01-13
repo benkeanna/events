@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
 
+
+/* font */
+
 * {
     font-family: 'Quicksand', sans-serif;
     margin: 0;
@@ -16,13 +19,145 @@ a:focus {
     outline: none;
 }
 
+
+/* header */
+
 header {
     height: 3rem;
     width: 100%;
     background-color: white;
     box-shadow: 0 3px 5px rgba(200,200,200);
+    display: flex;
+    white-space: nowrap;
+
+    position: fixed;
+    top:0;
+    left:0;
 }
 
 .header-section {
-    display: inline;
+    line-height: 3rem;
+}
+
+#header-searchbox input {
+    border: none;
+    border-bottom: solid rgb(200,200,200) 1px;
+    border-radius: 15px;
+    padding-left: 20px;
+    padding-bottom: 2px;
+    color: #a58006;
+}
+
+#header-searchbox {
+    /*margin-right: auto;*/
+}
+
+#logo-container {
+    text-align: left;
+}
+
+#nav-buttons {
+    margin: auto;
+    text-align:center
+}
+
+#user-buttons {
+    text-align:right;
+}
+
+#logo-container {
+    font-size: 1.5em;
+}
+
+.nav-button {
+    margin: 0 1rem;
+    font-weight: 700;
+}
+
+.nav-button:hover {
+    color: #cca620;
+}
+
+
+/* main picture */
+
+.main-banner {
+    background-position: top;
+    background-repeat: no-repeat;
+    background-image: url('/static/img/index.jpeg');
+    height: 800px;
+
+    display: grid;
+    grid-template-rows: 15% 25% 30% 1fr;
+    grid-template-columns: 10% repeat(6, 1fr) 10%;
+    align-items: center;
+    justify-items: center;
+    grid-column-gap: 10px;
+}
+
+.main-banner a {
+    height: 45px;
+    width: 200px;
+    line-height: 45px;
+
+    font-size: 20px;
+    text-align: center;
+
+    background-color: #cca620;
+    color: white;
+    border-radius: 1em;
+}
+
+.main-banner a:nth-of-type(1) {
+    grid-area: 3 / 3 / 4 / 4;
+}
+
+.main-banner a:nth-of-type(2) {
+    grid-area: 3 / 4 / 4 / 5;
+}
+
+.main-banner a:nth-of-type(3) {
+    grid-area: 3 / 5 / 4 / 6;
+}
+
+.main-banner a:nth-of-type(4) {
+    grid-area: 3 / 6 / 4 / 7;
+}
+
+.claim {
+    grid-area:2 / 3 / 3 / 7;
+    font-size: 80px;
+}
+
+
+/* footer */
+
+footer {
+    background-color: rgba(250,250,250);
+    height: 200px;
+
+    display: flex;
+    justify-content: center;
+}
+
+footer section {
+    padding: 1em 0;
+    width: 200px; /*need to specify width in order section to not stretch to max*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+footer section * {
+    align-text: center;
+}
+
+footer section a {
+    color: #4A4A4A;
+    font-size: 0.8em;
+    align-text: center;
+}
+
+footer section a:hover {
+    color:#000;
 }
