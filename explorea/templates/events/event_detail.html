@@ -26,11 +26,11 @@
 <table>
     <th>DATE</th><th>SEATS</th><th>PRICE</th>
     {% for run in runs %}
-     <tr>
-          <th>{{ run.date }}</th><th>{{ run.time }}</th><th>{{ run.seats_available }}</th><th>{{ run.price }}</th>
-		  <td><a href="/events/update_run/{{ run.id }}/">UPDATE</a></td>
-          <td><a href="/events/delete_run/{{ run.id }}/">DELETE</a></td>
-     </tr>
+        <tr>
+            <td><a href="{% url 'events:detail' event.id %}">{{ event.name }}</a></td>
+            <td> {{ event.location}}</td>
+            <td><a href="{% url 'events:update_event' event.id %}">UPDATE</a></td>
+        </tr>
     {% endfor %}
 </table>
 
