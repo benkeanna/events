@@ -161,3 +161,103 @@ footer section a {
 footer section a:hover {
     color:#000;
 }
+
+
+/* login */
+
+.grid_container {
+    height: 700px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center
+    align-content: center;
+}
+.login-image {
+    background-position: left;
+    background-repeat: no-repeat;
+    background-image: url('/static/img/index.jpeg');
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.login_form,
+.register_form {
+    grid-area: 1 / 2 / 2 / 3;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    white-space: nowrap;
+}
+
+.login_form h2,
+.register_form h2 {
+    font-size: 40px;
+    height: 50px;
+    margin-bottom: 50px;
+}
+
+.login_form p,
+.register_form p {
+    height: 2.6rem;
+    line-height: 2.6rem;
+    margin: 1rem auto;
+    /*display: flex;*/
+}
+
+.login_form label,
+.register_form label  {
+    display: inline-block;
+
+    /*text-align: right;
+    padding-right: 50px;*/
+    width: 12rem;
+}
+
+.login_form input,
+.register_form input {
+    width: 400px;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border: none;
+    border-bottom: solid rgb(200,200,200) 1px;
+}
+
+.login_form button,
+.register_form button {
+    margin-top: 20px;
+    width: 200px;
+}
+
+.login_form .forgot-pass {
+    display: inline-block;
+    width: 400px;
+    text-align: right;
+    color: #a58006;
+}
+
+.login_form .forgot-pass:hover {
+    font-weight: 700;
+    color: black;
+}
+
+
+/* shared */
+
+
+/*======SHARED ELEMENTS=======*/
+
+
+button {
+    border: none;
+    border-radius: 1em;
+    padding: 0.5em 1.5em;
+    font-size: 20px;
+}
+
+button:hover {
+    background-color: #cca620;
+    color: white;
+}
