@@ -5,21 +5,41 @@
 {% endblock title %}
 
 {% block content %}
-    <table>
-        <tr>
-        <th>NAME</th><th>LOCATION</th>
-        </tr>
-    {% for event in events %}
-        <tr>
-        <td><a href="/events/detail/{{ event.id }}">{{ event.name }}</a></td><td> {{ event.location}}</td>
-        </tr>
-    {% endfor %}
-    </table>
-<br>
-    {% if user.is_authenticated %}
-    <a href="/events/mine/">My events</a>
-    {% endif %}
-<br>
+<div class="thin-banner">
+    <h1>What do we have here ...</h1>
+</div>
 
-<a href="/">Back</a>
+<div class="event-filters">
+    <!--here we will put filters-->
+</div>
+
+<div class="event-category-filters">
+    <!--by clicking these buttons we should be taken to event listing, that show us only events of the given event category-->
+    <a class="button-gold" href="#">Fun</a>
+    <a class="button-gold" href="#">Experience</a>
+    <a class="button-gold" href="#">Sights</a>
+    <a class="button-gold" href="#">Relax</a>
+</div>
+
+<div class="tile-container">
+    {% if events %}
+    <div class="tile-grid">
+
+            {% for event in events %}
+                <a class="event-tile" href="{% url 'events:detail' event.id %}">
+                    {# <img src=""> #}
+                    <div class="not-available"></div>
+                    <div class="event-details">
+                        <p>{{ event.host }}</p>
+                        <p>{{ event.name }}</p>
+                        <p>{{ event.location}}</p>
+                    </div>
+                </a>
+            {% endfor %}
+
+    {% else %}
+        <div class="info empty-search">No events found ...</div>
+    {% endif %}
+</div>
+</div>
 {% endblock content %}
