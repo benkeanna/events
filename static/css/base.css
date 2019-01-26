@@ -314,6 +314,7 @@ button:hover {
     padding: 0 200px;
     margin: 3em auto;
 }
+
 .tile-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -336,6 +337,7 @@ button:hover {
 .event-details {
     padding: 1em;
 }
+
 .event-details p:nth-of-type(1) {
     font-style: italic;
 }
@@ -344,7 +346,6 @@ button:hover {
     font-weight: 600;
     font-size: 1.2em;
 }
-
 
 .not-available {
     width: 100%;
