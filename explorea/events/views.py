@@ -12,11 +12,11 @@ def index(request):
 	return render(request, 'events/index.html')
 
 
-def event_listing(request):
+def event_listing(request, category=None):
 	"""
 	Page with all events.
 	"""
-	events = Event.objects.all()
+	events = Event.objects.filter_by_category(category)
 
 	return render(request, 'events/event_listing.html', {'events': events})
 

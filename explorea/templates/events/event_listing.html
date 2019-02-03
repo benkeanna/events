@@ -15,10 +15,10 @@
 
 <div class="event-category-filters">
     <!--by clicking these buttons we should be taken to event listing, that show us only events of the given event category-->
-    <a class="button-gold" href="#">Fun</a>
-    <a class="button-gold" href="#">Experience</a>
-    <a class="button-gold" href="#">Sights</a>
-    <a class="button-gold" href="#">Relax</a>
+    <a class="button-gold" href="{% url 'events:events_by_category' 'travel' %}">Travel</a>
+    <a class="button-gold" href="{% url 'events:events_by_category' 'relax' %}">Relax</a>
+    <a class="button-gold" href="{% url 'events:events_by_category' 'music' %}">Music</a>
+    <a class="button-gold" href="{% url 'events:events_by_category' 'education' %}">Education</a>
 </div>
 
 <div class="tile-container">

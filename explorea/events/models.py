@@ -2,6 +2,19 @@ from django.db import models
 from django.conf.global_settings import AUTH_USER_MODEL
 
 
+class EventManager(models.Manager):
+
+    def filter_by_category(self, category):
+        db_equivalent = ''
+        for pair in self.model.CATEGORY_CHOICES:
+            if pair[1] == category:
+                db_equivalent = pair[0]
+                break
+        else:
+            return self.all()
+
+        return self.filter(category=db_equivalent)
+
 class Event(models.Model):
 	"""
 	Basic event model.
@@ -28,6 +41,8 @@ class Event(models.Model):
 			choices=CATEGORY_CHOICES,
 			default=RELAX,
 	)
+
+	objects = EventManager()
 
 	def __str__(self):
 		return self.name
