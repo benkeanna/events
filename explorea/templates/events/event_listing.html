@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load event_tags %}
 
 {% block title %}
 <title>Event Listing</title>
@@ -24,7 +25,6 @@
             </div>
         </div>
     {% endfor %}
-
     <button type="submit">Filter</button>
 </form>
 
@@ -48,6 +48,8 @@
                         <p>{{ event.host }}</p>
                         <p>{{ event.name }}</p>
                         <p>{{ event.location}}</p>
+                        <p><strong>Next:</strong> {{ event.eventrun_set.all|active|min_attr_value:"date" }}</p>
+                        <p><strong>From:</strong> {{ event.eventrun_set.all|active|min_attr_value:"price" }}</p>
                     </div>
                 </a>
             {% endfor %}

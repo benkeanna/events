@@ -326,6 +326,8 @@ button:hover {
 .event-tile {
     display: grid;
     grid-template-rows: 2fr 1fr;
+    white-space: nowrap;
+    min-width: 200px;
 }
 
 .event-tile img {
@@ -355,6 +357,31 @@ button:hover {
     background-repeat: no-repeat;
     background-position: center;
     border: solid #cca620 1px;
+}
+
+
+/* event filters */
+
+.event-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2em 0;
+}
+
+.event-filters .form-filter {
+    margin: 0 20px;
+
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border:none;
+    border-bottom: solid black 1px;
+    padding: 0.5em 1.5em;
+    background-color: white;
 }
 
 

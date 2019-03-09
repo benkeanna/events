@@ -31,4 +31,4 @@ class EventFilterForm(forms.Form):
 	date_to = forms.DateField(label='To', initial=None,
 	                          widget=forms.SelectDateWidget, required=False)
 
-	quests = forms.IntegerField(required=False, min_value=1)
+	guests = forms.IntegerField(required=False, min_value=1)

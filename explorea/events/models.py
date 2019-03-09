@@ -1,19 +1,42 @@
 from django.db import models
+from django.utils import timezone
+from django.db.models import Max
 from django.conf.global_settings import AUTH_USER_MODEL
+
+
+class EventQuerySet(models.QuerySet):
+
+	def filter_by_category(self, category=None):
+		db_equivalent = ''
+		for pair in self.model.CATEGORY_CHOICES:
+			if pair[1] == category:
+				db_equivalent = pair[0]
+				break
+		else:
+			return self.all()
+
+		return self.filter(category=db_equivalent)
+
+	def filter_available(self, date_from=None, date_to=None, guests=None):
+		# filter first all the eventruns and then get the ids to events
+		date_from = date_from or timezone.now().date()
+
+		if date_to:
+			qs = EventRun.objects.filter(date__range=(date_from, date_to))
+		else:
+			qs = EventRun.objects.filter(date__gte=date_from)
+
+		if guests:
+			qs = qs.filter(seats_available__gte=guests)
+
+		return self.filter(pk__in=[qs.values_list('event', flat=True)])
 
 
 class EventManager(models.Manager):
 
-    def filter_by_category(self, category):
-        db_equivalent = ''
-        for pair in self.model.CATEGORY_CHOICES:
-            if pair[1] == category:
-                db_equivalent = pair[0]
-                break
-        else:
-            return self.all()
+	def get_queryset(self):
+		return EventQuerySet(self.model, using=self._db)
 
-        return self.filter(category=db_equivalent)
 
 class Event(models.Model):
 	"""
@@ -46,6 +69,9 @@ class Event(models.Model):
 
 	def __str__(self):
 		return self.name
+
+	class Meta:
+		ordering = ['name']
 
 
 class EventRun(models.Model):
