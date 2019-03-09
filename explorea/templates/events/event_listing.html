@@ -9,9 +9,24 @@
     <h1>What do we have here ...</h1>
 </div>
 
-<div class="event-filters">
-    <!--here we will put filters-->
-</div>
+<form class="event-filters"  method="GET">
+    {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field }}
+    {% endfor %}
+
+    {% for field in filter_form.visible_fields %}
+        <div class="form-filter">
+            {{ field.label_tag }} {{ field }}
+            <div class="errors">
+                {% for error in field.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+
+    <button type="submit">Filter</button>
+</form>
 
 <div class="event-category-filters">
     <!--by clicking these buttons we should be taken to event listing, that show us only events of the given event category-->
@@ -42,4 +57,7 @@
     {% endif %}
 </div>
 </div>
+
+{% include 'pagination.html' with page=events %}
+
 {% endblock content %}

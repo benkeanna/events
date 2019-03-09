@@ -1,29 +1,39 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Event, EventRun
-from .forms import EventForm, EventRunForm
+from .forms import EventForm, EventRunForm, EventFilterForm
 
 
 def index(request):
-	"""
-	Home page.
+	"""Home page.
 	"""
 	return render(request, 'events/index.html')
 
 
 def event_listing(request, category=None):
-	"""
-	Page with all events.
+	"""Page with all events.
 	"""
 	events = Event.objects.filter_by_category(category)
 
-	return render(request, 'events/event_listing.html', {'events': events})
+	if request.GET:
+		filter_form = EventFilterForm(request.GET)
+		if filter_form.is_valid():
+			events = Event.objects.filter_available(**filter_form.cleaned_data)
+	else:
+		filter_form = EventFilterForm()
+
+	paginator = Paginator(events, 1)
+	page = request.GET.get('page')
+	events = paginator.get_page(page)
+
+	return render(request, 'events/event_listing.html',
+	              {'events': events, 'filter_form': filter_form})
 
 
 def event_detail(request, pk):
-	"""
-	Page with event detail.
+	"""Page with event detail.
 	"""
 	event = Event.objects.get(pk=pk)
 	runs = event.eventrun_set.all().order_by('date')
@@ -34,8 +44,7 @@ def event_detail(request, pk):
 
 @login_required
 def my_events(request):
-	"""
-	Page with events created by user.
+	"""Page with events created by user.
 	"""
 	events = Event.objects.all().filter(host_id=request.user.id)
 
@@ -44,8 +53,7 @@ def my_events(request):
 
 @login_required
 def create_event(request):
-	"""
-	Event creation page.
+	"""Event creation page.
 	"""
 	if request.method == 'POST':
 		form = EventForm(request.POST)
@@ -63,8 +71,7 @@ def create_event(request):
 
 @login_required
 def update_event(request, pk):
-	"""
-	Event updating page.
+	"""Event updating page.
 	"""
 	event = Event.objects.get(pk=pk)
 	
@@ -84,8 +91,7 @@ def update_event(request, pk):
 
 @login_required
 def delete_event(request, pk):
-	"""
-	Deletes event..
+	"""Deletes event..
 	"""
 	Event.objects.get(pk=pk).delete()
 
@@ -94,8 +100,7 @@ def delete_event(request, pk):
 
 @login_required
 def create_event_run(request, event_id):
-	"""
-	Event run creation page.
+	"""Event run creation page.
 	"""
 	if request.method == 'POST':
 		form = EventRunForm(request.POST)
@@ -113,8 +118,7 @@ def create_event_run(request, event_id):
 
 @login_required
 def update_event_run(request, event_run_id):
-	"""
-	Event run updating page.
+	"""Event run updating page.
 	"""
 	event_run = EventRun.objects.get(pk=event_run_id)
 	
@@ -133,8 +137,7 @@ def update_event_run(request, event_run_id):
 
 @login_required
 def delete_event_run(request, event_run_id):
-	"""
-	Deletes event run.
+	"""Deletes event run.
 	"""
 	run = EventRun.objects.get(pk=event_run_id)
 	event_id = run.event.id
