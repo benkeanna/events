@@ -33,10 +33,10 @@ def event_listing(request, category=None):
 	              {'events': events, 'filter_form': filter_form})
 
 
-def event_detail(request, pk):
+def event_detail(request, slug):
 	"""Page with event detail.
 	"""
-	event = Event.objects.get(pk=pk)
+	event = Event.objects.get(slug=slug)
 	runs = event.eventrun_set.all().order_by('date')
 	args = {'event': event, 'runs': runs}
 
@@ -84,10 +84,10 @@ def create_event(request):
 
 
 @login_required
-def update_event(request, pk):
+def update_event(request, slug):
 	"""Event updating page.
 	"""
-	event = Event.objects.get(pk=pk)
+	event = Event.objects.get(slug=slug)
 	
 	if request.method == 'POST':
 		form = EventForm(request.POST, instance=event)
@@ -104,10 +104,10 @@ def update_event(request, pk):
 
 
 @login_required
-def delete_event(request, pk):
+def delete_event(request, slug):
 	"""Deletes event..
 	"""
-	Event.objects.get(pk=pk).delete()
+	Event.objects.get(slug=slug).delete()
 
 	return redirect('my_events')
 

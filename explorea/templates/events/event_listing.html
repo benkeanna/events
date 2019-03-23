@@ -41,7 +41,7 @@
     <div class="tile-grid">
 
             {% for event in events %}
-                <a class="event-tile" href="{% url 'events:detail' event.id %}">
+                <a class="event-tile" href="{{ event.get_absolute_url }}">
                     {# <img src=""> #}
                     <div class="not-available"></div>
                     <div class="event-details">

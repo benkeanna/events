@@ -14,6 +14,10 @@ class EventForm(forms.ModelForm):
 			'category',
 		]
 
+	class Meta:
+		model = Event
+		exclude = ['host', 'slug']
+
 
 class EventRunForm(forms.ModelForm):
 	date = forms.DateField(input_formats=["%d.%m.%Y"],
