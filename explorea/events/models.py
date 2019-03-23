@@ -5,6 +5,13 @@ from django.utils.text import slugify
 from django.conf.global_settings import AUTH_USER_MODEL
 
 
+def get_related_attr(obj, attrs):
+    related_obj = obj
+    for attr in attrs:
+        related_obj = getattr(related_obj, attr)
+    return related_obj
+
+
 class EventQuerySet(models.QuerySet):
 
 	def filter_by_category(self, category=None):
