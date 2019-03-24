@@ -96,6 +96,11 @@ class EventRunManager(models.Manager):
 	def get_queryset(self):
 		return EventRunQuerySet(self.model, using=self._db)
 
+class EventRunManager(models.Manager):
+
+	def get_queryset(self):
+		return EventRunQuerySet(self.model, using=self._db)
+
 
 class Event(models.Model):
 	"""
@@ -135,6 +140,10 @@ class Event(models.Model):
 		ordering = ['name']
 		unique_together = (("name", "host"),)
 
+	def active_runs(self):
+		today = timezone.now().date()
+		return self.eventrun_set.filter(date__gte=today)
+
 	def save(self, *args, **kwargs):
 		if not self.slug:
 			self.slug = slugify(self.name + '-with-' + self.host.username)
@@ -155,3 +164,12 @@ class EventRun(models.Model):
 	seats_available = models.PositiveIntegerField(blank=False, null=False)
 	price = models.DecimalField(
 			max_digits=10, decimal_places=2, blank=False, null=False)
+
+	objects = EventRunManager()
+
+
+	def __str__(self):
+		return '{}|{} ({})'.format(self.date, self.event, self.event.category)
+
+	class Meta:
+		ordering = ['date', 'time']

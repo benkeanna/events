@@ -15,7 +15,7 @@ def index(request):
 def event_listing(request, category=None):
 	"""Page with all events.
 	"""
-	events = Event.objects.all().filter_by_category(category)
+	event_runs = EventRun.objects.all().filter_by_category(category)
 	filter_form = EventFilterForm(request.GET or None)
 
 	if request.GET and filter_form.is_valid():
@@ -23,21 +23,20 @@ def event_listing(request, category=None):
 	else:
 		data = {}
 
-	events = events.filter_available(**data)
+	event_runs = event_runs.filter_first_available(**data)
 
-	paginator = Paginator(events, 16)
+	paginator = Paginator(event_runs, 4)
 	page = request.GET.get('page')
-	events = paginator.get_page(page)
+	event_runs = paginator.get_page(page)
 
 	return render(request, 'events/event_listing.html',
-	              {'events': events, 'filter_form': filter_form})
-
+	              {'event_runs': event_runs, 'filter_form': filter_form})
 
 def event_detail(request, slug):
 	"""Page with event detail.
 	"""
 	event = Event.objects.get(slug=slug)
-	runs = event.eventrun_set.all().order_by('date')
+	runs = event.active_runs()
 	args = {'event': event, 'runs': runs}
 
 	return render(request, 'events/event_detail.html', args)

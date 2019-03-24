@@ -13,6 +13,13 @@ def min_attr_value(objects, field_name):
 
 
 @register.filter
+def max_attr_value(objects, field_name):
+    values = [getattr(obj,field_name) for obj in objects]
+    if values:
+        return max(values)
+
+
+@register.filter
 def next_date(objects,field_name="date"):
     dates = sorted(objects.values_list(field_name, flat=True))
     for dt in dates:

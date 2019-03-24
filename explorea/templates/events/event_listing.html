@@ -18,12 +18,16 @@
     {% for field in filter_form.visible_fields %}
         <div class="form-filter">
             {{ field.label_tag }} {{ field }}
-            <div class="errors">
-                {% for error in field.errors %}
-                    <div class="error">{{ error }}</div>
-                {% endfor %}
-            </div>
         </div>
+
+        <div class="errors" for={{ field.name }}>
+            {% for error in field.errors %}
+            <div class="error" >
+                {{ error }}
+            </div>
+            {% endfor %}
+        </div>
+
     {% endfor %}
     <button type="submit">Filter</button>
 </form>
@@ -34,22 +38,27 @@
     <a class="button-gold" href="{% url 'events:events_by_category' 'relax' %}">Relax</a>
     <a class="button-gold" href="{% url 'events:events_by_category' 'music' %}">Music</a>
     <a class="button-gold" href="{% url 'events:events_by_category' 'education' %}">Education</a>
+    <a class="button-gold" href="{% url 'events:events' %}">All</a>
 </div>
 
 <div class="tile-container">
-    {% if events %}
+    {% if event_runs %}
     <div class="tile-grid">
 
-            {% for event in events %}
-                <a class="event-tile" href="{{ event.get_absolute_url }}">
+            {% for eventrun in event_runs %}
+                <a class="event-tile" href="{{ eventrun.event.get_absolute_url }}">
                     {# <img src=""> #}
                     <div class="not-available"></div>
                     <div class="event-details">
-                        <p>{{ event.host }}</p>
-                        <p>{{ event.name }}</p>
-                        <p>{{ event.location}}</p>
-                        <p><strong>Next:</strong> {{ event.eventrun_set.all|active|min_attr_value:"date" }}</p>
-                        <p><strong>From:</strong> {{ event.eventrun_set.all|active|min_attr_value:"price" }}</p>
+                        <p>{{ eventrun.event.host }}</p>
+                        <p>{{ eventrun.event.name }}</p>
+                        <p>{{ eventrun.event.location}}</p>
+                        <p><strong>Next:</strong> {{ eventrun.date }}</p>
+                        <p><strong>Price:</strong> $ {{ eventrun.price }}</p>
+                        <p><strong>Seats:</strong> {{ eventrun.seats_available }}</p>
+                        <hr>
+                        <p><strong>Price From:</strong> $ {{ eventrun.event.eventrun_set.all|active|min_attr_value:"price" }}</p>
+                        <p><strong>Seats Up To:</strong> {{ eventrun.event.eventrun_set.all|active|max_attr_value:"seats_available" }}</p>
                     </div>
                 </a>
             {% endfor %}
@@ -60,6 +69,6 @@
 </div>
 </div>
 
-{% include 'pagination.html' with page=events %}
+{% include 'pagination.html' with page=event_runs %}
 
 {% endblock content %}
