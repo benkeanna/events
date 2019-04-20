@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from core.validators import validate_human_name
 
+from .models import Profile
+
 UserModel = get_user_model()
 
 
@@ -26,7 +28,7 @@ class RegisterForm(UserCreationForm):
         ]
 
 
-class EditProfileForm(UserChangeForm):
+class EditUserForm(UserChangeForm):
     """
     Edit profile form derived from UserChangeForm.
     """
@@ -42,3 +44,9 @@ class EditProfileForm(UserChangeForm):
             'last_name',
             'password',
         ]
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['about']

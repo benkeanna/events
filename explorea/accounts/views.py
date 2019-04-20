@@ -3,7 +3,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 
-from .forms import RegisterForm, EditProfileForm
+from .forms import RegisterForm, EditUserForm, EditProfileForm
 
 
 @login_required
@@ -37,18 +37,18 @@ def register(request):
 
 @login_required
 def edit_profile(request):
-	"""
-	Edit profile page.
-	"""
+	user_form = EditUserForm(request.POST or None, instance=request.user)
+	profile_form = EditProfileForm(request.POST or None, instance=request.user.profile)
+
 	if request.method == 'POST':
-		form = EditProfileForm(request.POST, instance=request.user)
+		if user_form.is_valid() and profile_form.is_valid():
+			user = user_form.save()
+			profile = profile_form.save()
 
-		if form.is_valid():
-			form.save()
-			return redirect('profile')
+			return redirect('accounts:profile')
 
-	args = {'form': EditProfileForm(instance=request.user)}
-	return render(request, 'accounts/edit_profile.html', args)
+	return render(request, 'accounts/edit_profile.html',
+		{'user_form': user_form, 'profile_form': profile_form})
 
 
 @login_required
