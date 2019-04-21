@@ -36,7 +36,7 @@
     <th>DATE</th><th>SEATS</th><th>PRICE</th>
     {% for run in runs %}
         <tr>
-            <td><a href="{% url 'events:detail' event.id %}">{{ event.name }}</a></td>
+            <td><a href="{% url 'events:detail' event.slug %}">{{ event.name }}</a></td>
             <td> {{ event.location}}</td>
             <h2>{{ event.name }} | <a href="{% url 'events:update_event' event.slug %}">UPDATE</a></h2>
         </tr>

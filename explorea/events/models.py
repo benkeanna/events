@@ -8,6 +8,12 @@ from imagekit.processors import ResizeToFill
 from imagekit.models import ProcessedImageField
 
 
+def album_image_url(instance, filename):
+    """upload_to for Image model"""
+    return 'user_{0}/{1}/{2}'.format(instance.album.event.host.id,
+                                     instance.album.title, filename)
+
+
 def thumbnail_image_url(instance, filename):
     """upload_to for Event thumbnail image"""
     return 'user_{0}/thumb_{1}'.format(instance.host.id, filename)
@@ -165,6 +171,9 @@ class Event(models.Model):
             self.slug = slugify(self.name + '-with-' + self.host.username)
         super().save(*args, **kwargs)
 
+        if not hasattr(self, 'album'):
+            Album.objects.create(event=self)
+
     def get_absolute_url(self):
         return reverse('events:detail', args=[self.slug])
 
@@ -181,9 +190,38 @@ class EventRun(models.Model):
 
     objects = EventRunManager()
 
-
     def __str__(self):
         return '{}|{} ({})'.format(self.date, self.event, self.event.category)
 
     class Meta:
         ordering = ['date', 'time']
+
+
+class Album(models.Model):
+    event = models.OneToOneField(Event, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.title:
+            self.title = "album_" + self.event.name
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return '{}'.format(self.title)
+
+
+class Image(models.Model):
+    album = models.ForeignKey(Album, on_delete=models.CASCADE)
+    image = ProcessedImageField(upload_to=album_image_url,
+            processors=[ResizeToFill(500,400)],
+            format='PNG',
+            options={'quality':80})
+    title = models.CharField(max_length=200, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '{}/{}'.format(self.album, self.title)
+
+    class Meta:
+        ordering = ['created']
