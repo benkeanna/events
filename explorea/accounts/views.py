@@ -8,16 +8,12 @@ from .forms import RegisterForm, EditUserForm, EditProfileForm
 
 @login_required
 def profile(request):
-	"""
-	Page with user information.
-	"""
+	"""Page with user information."""
 	return render(request, 'accounts/profile.html')
 
 
 def register(request):
-	"""
-	Registration page.
-	"""
+	"""Registration page."""
 	if request.method == 'POST':
 		form = RegisterForm(request.POST)
 
@@ -37,9 +33,10 @@ def register(request):
 
 @login_required
 def edit_profile(request):
+	"""Page for editing profile."""
 	user_form = EditUserForm(request.POST or None, instance=request.user)
-	profile_form = EditProfileForm(request.POST or None, instance=request.user.profile)
-
+	profile_form = EditProfileForm(request.POST or None, request.FILES or None,
+	                               instance=request.user.profile)
 	if request.method == 'POST':
 		if user_form.is_valid() and profile_form.is_valid():
 			user = user_form.save()
@@ -48,14 +45,12 @@ def edit_profile(request):
 			return redirect('accounts:profile')
 
 	return render(request, 'accounts/edit_profile.html',
-		{'user_form': user_form, 'profile_form': profile_form})
+	              {'user_form': user_form, 'profile_form': profile_form})
 
 
 @login_required
 def change_password(request):
-	"""
-	Page for changing password.
-	"""
+	"""Page for changing password."""
 	if request.method == 'POST':
 		form = PasswordChangeForm(data=request.POST, user=request.user)
 

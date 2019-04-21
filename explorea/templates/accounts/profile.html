@@ -4,6 +4,16 @@
 <br>
 <table>
     <tr>
+        <td>
+        {% if  user.profile.avatar|has:'url' %}
+            <img src="{{ user.profile.avatar.url }}">
+        {% else %}
+            <img src="{% static 'img/avatar.png' %}">
+        {% endif %}
+        </td>
+        }
+    </tr>
+    <tr>
         <td>Username: </td><td>{{ user.username }}</td>
     </tr>
     <tr>
