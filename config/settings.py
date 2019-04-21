@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'explorea.events',
     'explorea.accounts',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
