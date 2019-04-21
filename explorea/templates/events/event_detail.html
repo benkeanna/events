@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load event_tags %}
 
 {% block title %}
 <title>{{ event.name }}</title>
@@ -13,6 +14,14 @@
         <th>{{ event.host }}</th><th>{{ event.location }}</th><th>{{ event.category }}</th>
     </tr>
 </table>
+
+<div class="main-image">
+{% if event|has:'main_image' %}
+<img src="{{ event.main_image.url }}">
+{% else %}
+<div class="not-available"></div>
+{% endif %}
+</div>
 
 <p>{{ event.description }}</p>
 
@@ -29,7 +38,7 @@
         <tr>
             <td><a href="{% url 'events:detail' event.id %}">{{ event.name }}</a></td>
             <td> {{ event.location}}</td>
-            <td><a href="{% url 'events:update_event' event.id %}">UPDATE</a></td>
+            <h2>{{ event.name }} | <a href="{% url 'events:update_event' event.slug %}">UPDATE</a></h2>
         </tr>
     {% endfor %}
 </table>

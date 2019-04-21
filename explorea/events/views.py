@@ -84,28 +84,23 @@ def create_event(request):
 
 @login_required
 def update_event(request, slug):
-	"""Event updating page.
-	"""
+	"""Event updating page."""
 	event = Event.objects.get(slug=slug)
-	
+	event_form = EventForm(request.POST or None, request.FILES or None, instance=event)
+
 	if request.method == 'POST':
-		form = EventForm(request.POST, instance=event)
+		if event_form.is_valid():
+			event = event_form.save()
 
-		if form.is_valid():
-			event = form.save(commit=False)
-			event.host = request.user
-			event.save()
+			return redirect(event.get_absolute_url())
 
-			return redirect('my_events')
-
-	args = {'form': EventForm(instance=event)}
-	return render(request, 'events/update_event.html', args)
+	return render(request, 'events/create_event.html',
+	              {'event_form': event_form, 'event': event})
 
 
 @login_required
 def delete_event(request, slug):
-	"""Deletes event..
-	"""
+	"""Delete event."""
 	Event.objects.get(slug=slug).delete()
 
 	return redirect('my_events')
@@ -113,8 +108,7 @@ def delete_event(request, slug):
 
 @login_required
 def create_event_run(request, event_id):
-	"""Event run creation page.
-	"""
+	"""Event run creation page."""
 	if request.method == 'POST':
 		form = EventRunForm(request.POST)
 		
@@ -131,8 +125,7 @@ def create_event_run(request, event_id):
 
 @login_required
 def update_event_run(request, event_run_id):
-	"""Event run updating page.
-	"""
+	"""Event run updating page."""
 	event_run = EventRun.objects.get(pk=event_run_id)
 	
 	if request.method == 'POST':
@@ -150,8 +143,7 @@ def update_event_run(request, event_run_id):
 
 @login_required
 def delete_event_run(request, event_run_id):
-	"""Deletes event run.
-	"""
+	"""Deletes event run."""
 	run = EventRun.objects.get(pk=event_run_id)
 	event_id = run.event.id
 	run.delete()

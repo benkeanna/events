@@ -262,6 +262,16 @@ button:hover {
     color: white;
 }
 
+/* event page */
+.main-image {
+    height: 500px;
+    width: 400px;
+}
+
+.main-image img {
+    height: 100%;
+    width: 100%;
+}
 
 /* event listing */
 
@@ -437,6 +447,7 @@ select {
 
 
 /* pagination */
+
 .pagination {
     margin: 3em;
     display: flex;

@@ -47,8 +47,11 @@
 
             {% for eventrun in event_runs %}
                 <a class="event-tile" href="{{ eventrun.event.get_absolute_url }}">
-                    {# <img src=""> #}
+                    {% if eventrun.event|has:'thumbnail' %}
+                        <img src="{{ eventrun.event.thumbnail.url }}">
+                    {% else %}
                     <div class="not-available"></div>
+                    {% endif %}
                     <div class="event-details">
                         <p>{{ eventrun.event.host }}</p>
                         <p>{{ eventrun.event.name }}</p>
