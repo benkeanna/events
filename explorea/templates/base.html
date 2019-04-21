@@ -13,12 +13,27 @@
 
 </head>
 <body>
-
     {% include 'header.html' %}
 
     {% block content %}{% endblock content %}
-
     {% include 'footer.html' %}
+
+    {% block scripts %}
+    <script src="{% static 'js/jquery_3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $('.owl-carousel').owlCarousel({
+            loop:true,
+            margin:10,
+            nav:true,
+            dots:false,
+            autoHeight:true,
+            autoWidth: true,
+        })
+    });
+    </script>
+    {% endblock %}
 
 </body>
 </html>

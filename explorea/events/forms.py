@@ -78,3 +78,7 @@ class EventFilterForm(forms.Form):
 		if not self.cleaned_data.get('sort_by'):
 			self.cleaned_data['sort_by'] = 'date'
 		self.cleaned_data
+
+
+class MultipleFileForm(forms.Form):
+	gallery = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)

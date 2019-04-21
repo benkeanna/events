@@ -469,3 +469,27 @@ select {
 .pagination .inactive-pagination {
     background-color: #c9c9c9;
 }
+
+/* carousel setup */
+.owl-carousel {
+    height: 400px;
+    width: 500px;
+    position: relative;
+}
+.owl-nav {
+    font-size: 2rem;
+}
+.owl-prev {
+    width: 15px;
+    height: 100px;
+    position: absolute;
+    top: 40%;
+    left: 3%;
+}
+.owl-next {
+    width: 15px;
+    height: 100px;
+    position: absolute;
+    top: 40%;
+    right: 3%;
+}

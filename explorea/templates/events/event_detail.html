@@ -25,6 +25,13 @@
 
 <p>{{ event.description }}</p>
 
+<!--Image slideshow-->
+<div class="owl-carousel">
+{% for image in event.album.image_set.all %}
+<img src="{{ image.image.url }}" alt="{{ image.title }}">
+{% endfor %}
+</div>
+
 <hr>
 
 <br>
